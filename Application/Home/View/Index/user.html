@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>社区快递管理系统</title>
+
+    <!-- Bootstrap -->
+    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/index.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  	<nav class="navbar navbar-default navbar-fixed-top" id="exNavbar">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#">社区快递管理系统</a>
+	    </div>
+
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav navbar-left">
+	        <li class="active"><a href="#">提交快递<span class="sr-only">(current)</span></a></li>
+          <li><a href="__URL__/userfind">代领快递</a></li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="#">{$username}</a></li>
+	        <li><a href="__URL__/index">注销</a></li>	        
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+	<section id="main-content">
+		<form class="express-form" action="">
+		  <!-- <h3>快递信息</h3> -->
+		  <div class="form-group">
+		    <label for="name">姓名：</label>
+		    <input type="text" class="form-control" id="name" name="name" placeholder="" required>
+		  </div>
+		  <div class="form-group">
+		    <label for="phone">电话：</label>
+		    <input type="text" class="form-control" id="phone" name="phone" placeholder="" required>
+		  </div>
+		  <div class="form-group">
+		    <label for="company">快递公司：</label>
+		    <input type="text" class="form-control" id="company" name="company" placeholder="" required>
+		  </div>
+		  <div class="form-group">
+		    <label for="expressNumber">运单号：</label>
+		    <input type="text" class="form-control" id="expressNumber" name="expressNumber" placeholder="" required>
+		  </div>
+		  <div class="form-group">
+		    <label for="startAddress">寄件地址：</label>
+		    <textarea class="form-control" rows="3" id="startAddress" name="startAddress" required></textarea>
+		  </div>
+		  <div class="form-group">
+		    <label for="endAddress">收件地址：</label>
+		    <textarea class="form-control" rows="3" id="endAddress" name="endAddress" required></textarea>
+		  </div>
+		  <div style="text-align:center;">
+			  <button type="submit" id="submitExpress" class="btn btn-primary">提交</button>
+		  </div>
+		</form>
+	</section>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="__PUBLIC__/js/jquery-1.11.2.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="__PUBLIC__/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        $('#submitExpress').on('click',function(event) {
+          event.preventDefault();
+          /* Act on the event */
+          var url = "__URL__/expressForm";
+          var expressData = {};
+          expressData["name"] = $("#name")[0].value;
+          expressData["phone"] = $("#phone")[0].value;
+          expressData["company"] = $("#company")[0].value;
+          expressData["expressNumber"] = $("#expressNumber")[0].value;
+          expressData["startAddress"] = $("#startAddress")[0].value;
+          expressData["endAddress"] = $("#endAddress")[0].value;
+          console.log(expressData);
+          // $.ajax({
+          //   url: url,
+          //   type: 'POST',
+          //   dataType: 'json',
+          //   data: expressData,
+          // })
+          // .done(function() {
+          //   console.log("success");
+          // })
+          // .fail(function() {
+          //   console.log("error");
+          // })
+          // .always(function() {
+          //   console.log("complete");
+          // });
+          $.getJSON(url, expressData, function(data) {
+              /*optional stuff to do after success */
+              console.log(data.status);
+              if (data.status){
+                alert("提交成功！");
+              } else {
+                alert("提交失败！");
+              }
+          });          
+        });
+      });
+    </script>
+  </body>
+</html>

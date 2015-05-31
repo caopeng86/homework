@@ -1,0 +1,63 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>社区快递管理系统</title>
+
+    <!-- Bootstrap -->
+    <link href="/homework/Public/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/homework/Public/css/index.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  	<div class="login-content">
+  		<h3>社区快递管理系统</h3>
+		<form action="/homework/index.php/Home/Index/login" method="POST">
+		  <div class="form-group">
+		    <label for="username">用户名</label>
+		    <input type="text" class="form-control" name="username" id="username" placeholder="用户名" required>
+		  </div>
+		  <div class="form-group">
+		    <label for="password">密码</label>
+		    <input type="password" class="form-control" name="password" id="password" placeholder="密码" required>
+		  </div>
+		  <div class="login-btn">
+			<button type="submit" class="btn btn-primary">登陆</button>
+			<a href="" data-toggle="modal" data-target=".regist-modal">注册</a>
+		  </div>
+		</form>
+  	</div>
+  	<div class="modal fade regist-modal" tabindex="-1" role="dialog" aria-labelledby="registModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+	     	<form action="/homework/index.php/Home/Index/regist" id="regist-form" method="POST">
+	     		<div class="form-group">
+				    <label for="registName">用户名</label>
+				    <input type="text" class="form-control" name="registName" id="registName" placeholder="用户名" required>
+				  </div>
+				  <div class="form-group">
+				    <label for="registPassword">密码</label>
+				    <input type="password" class="form-control" name="registPassword" id="registPassword" placeholder="密码" required>
+				  </div>
+				  <div style="text-align: center;">
+					  <button type="submit" class="btn btn-primary">注册</button>
+				  </div>
+	     	</form>
+	    </div>
+	  </div>
+	</div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/homework/Public/js/jquery-1.11.2.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/homework/Public/js/bootstrap.min.js"></script>
+  </body>
+</html>

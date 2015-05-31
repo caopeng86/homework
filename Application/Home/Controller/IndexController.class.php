@@ -2,7 +2,122 @@
 namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
-    public function index(){
-        $this->show('<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} body{ background: #fff; font-family: "微软雅黑"; color: #333;font-size:24px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.8em; font-size: 36px } a,a:hover,{color:blue;}</style><div style="padding: 24px 48px;"> <h1>:)</h1><p>欢迎使用 <b>ThinkPHP</b>！</p><br/>版本 V{$Think.version}</div><script type="text/javascript" src="http://ad.topthink.com/Public/static/client.js"></script><thinkad id="ad_55e75dfae343f5a1"></thinkad><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script>','utf-8');
+  public function index(){
+    $User = M('User');
+    $this->display();
+  }
+  public function user() {
+    $username = session("username");
+    $this->assign('username', $username);
+    $this->display();
+  }
+  public function admin() {
+    $Express = M('Express');
+    $map['status'] = 0;
+    $username = session("username");
+    $expressList = $Express->where($map)->select();
+    $this->assign('expressList', $expressList);
+    $this->assign('username', $username);
+    $this->display();
+  }
+  public function userfind() {
+    $Express = M('Express');
+    $map['status'] = 0;
+    $map['isRelease'] = 1;
+    $expressList = $Express->where($map)->select();
+    $username = session("username");
+    $this->assign('username', $username);
+    $this->assign('expressList', $expressList);
+    $this->display();
+  }
+  public function login() {
+    $User = M('User');
+    $condition['username'] = I('post.username');
+    $condition['password'] = I('post.password');
+    $user = $User->where($condition)->find();
+    if ($user) {
+      session('userid', $user["userid"]);
+      session('username', $user["username"]);
+      if ($user['mark'] == 1) {
+        //$this->display('admin');
+        // $this->success('登陆成功', 'admin', 0);
+        $this->redirect('admin', array(), 0, '页面跳转中...');
+      } else {
+        // $this->success('登陆成功', 'user', 0);
+        $this->redirect('user', array(), 0, '页面跳转中...');
+      }
+    } else {
+      $this->display('index');
+    } 
+  }
+  public function regist() {
+    $User = M('User');
+    $data['username'] = I('post.registName');
+    $data['password'] = I('post.registPassword');
+    $result = $User->add($data);
+    if($result) {
+      $this->display('index');
     }
+  }
+  public function expressForm() {
+    $Express = M('Express');
+    $data['name'] = I('get.name');
+    $data['phone'] = I('get.phone');
+    $data['company'] = I('get.company');
+    $data['expressNumber'] = I('get.expressNumber');
+    $data['startAddress'] = I('get.startAddress');
+    $data['endAddress'] = I('get.endAddress');
+    $userid = session('userid');
+    $data["userId"] = $userid;
+    $data['status'] = 0;
+    $result = $Express->add($data);
+    if ($result) {
+      $returnData["status"] = true;
+    } else {
+      $returnData["status"] = false;
+    }
+    $this->ajaxReturn($returnData);
+  }
+
+  public function searchAjax() {
+    $name = I('get.name');
+    $Express = M('Express');
+    $map['name'] = $name;
+    $map['status'] = 0;
+    $returnData = $Express->where($map)->select();
+    // var_dump($returnData);
+    $this->ajaxReturn($returnData);
+  }
+  public function finishExpressAjax() {
+    $Express =  M('Express');
+    $isFinish = intval(I('get.isfinish'));
+    $expressid = I('get.expressid');
+    if ($isFinish) {
+      $data['expressId'] = $expressid;
+      $data['status'] = 1;
+      if ($Express->save($data)) {
+        $returnData["status"] = true;
+      } else {
+        $returnData["status"] = false; 
+      }
+    }
+    $this->ajaxReturn($returnData);
+  }
+  public function releaseAjax() {
+    $isRelease = intval(I('get.isRelease'));
+    $expressid = intval(I('get.expressid'));
+    $Express = M('Express');
+    if ($isRelease == 1) {
+      $data['expressId'] = $expressid;
+      $data['isRelease'] = 1;
+      $result = $Express->save($data);
+      echo $result;
+      if ($result !== false) {
+        $returnData['status'] = true;
+      } else {
+        $returnData['status'] = false;
+      }
+    }
+    $this->ajaxReturn($returnData);
+  }
 }
