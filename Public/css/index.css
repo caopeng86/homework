@@ -1,0 +1,70 @@
+body {
+	background-color: #EDEFF0;
+	margin: 0;
+	padding: 0;
+    font-family: "Microsoft YaHei", Arial, Helvetica, sans-serif, "宋体";
+}
+/***************************************login css***********************************/
+.login-content {
+	width: 300px;
+	margin: 200px auto;
+	padding: 10px;
+	border: 1px solid #ddd;
+	background-color: #fff;
+}
+.login-content h3 {
+	text-align: center;
+	margin: 0px;
+	font-size: 17px;
+	padding: 10px;
+	font-weight: 500;
+}
+.login-content .login-btn {
+	text-align: center;
+}
+.login-content .login-btn button {
+	border-radius: 0px;
+	padding: 4px 15px;
+}
+#regist-form {
+	padding: 10px;
+}
+
+/****************************************nav css*********************************************/
+#exNavbar {
+	padding-left: 10%;
+}
+#exNavbar .navbar-right a {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+#main-content {
+	margin-top: 50px;
+	padding: 20px;
+}
+/**************************************user css**********************************************/
+#main-content .express-form {
+	width: 450px;
+	margin: 0 auto;
+	background-color: #fff;
+	padding: 10px;
+}
+/*************************************admin css*********************************************/
+#main-content #search {
+	width: 600px;
+	margin: 0 auto;
+	text-align: center;
+}
+#main-content #search input {
+	width: 350px;
+	border-radius: 0px;
+}
+#main-content #search button {
+	padding: 5px 20px;
+	border-radius: 0px;
+}
+#main-content .table-content {
+	margin-top: 20px;
+	background-color: #fff;
+}
